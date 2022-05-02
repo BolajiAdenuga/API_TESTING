@@ -1,0 +1,355 @@
+{
+  "info": {
+    "_postman_id": "9e2bb68d-7488-488f-8bdb-83097504b9ff",
+    "name": "BitPanda",
+    "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Status",
+      "item": [
+        {
+          "name": "API Status",
+          "_postman_id": "b1ae0f51-e365-4db5-9bc6-aa13428ecc27",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseURL}}"
+          },
+          "response": []
+        }
+      ],
+      "_postman_id": "4abd284f-8526-4603-a0bb-96b372616a24"
+    },
+    {
+      "name": "List Users",
+      "item": [
+        {
+          "name": "Get users",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "c6dfe4c3-956a-4f8a-a334-553b43676413",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"page details\", function () \r",
+                  "{\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect (jsonData.page).to.eql(2);\r",
+                  "    pm.expect (jsonData.per_page).to.eql(6);\r",
+                  "    pm.expect (jsonData.total).to.eql(12);\r",
+                  "    pm.expect (jsonData.total_pages).to.eql(2);\r",
+                  "  });\r",
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "_postman_id": "b170ca9b-9cbe-44f9-9ee9-64c3b3f7bbca",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://reqres.in/api/users?page=2",
+              "protocol": "https",
+              "host": [
+                "reqres",
+                "in"
+              ],
+              "path": [
+                "api",
+                "users"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "2"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "List resources",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"page details\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect (jsonData.page).to.eql(2);\r",
+                  "    pm.expect (jsonData.per_page).to.eql(6);\r",
+                  "    pm.expect (jsonData.total).to.eql(12);\r",
+                  "    pm.expect (jsonData.total_pages).to.eql(2);\r",
+                  "  \r",
+                  "\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "id": "7b6dd92f-f289-4728-940d-4b0b36653f21"
+              }
+            }
+          ],
+          "_postman_id": "32670352-f32f-420e-a147-c8b523bb1987",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://reqres.in/api/users?page=2",
+              "protocol": "https",
+              "host": [
+                "reqres",
+                "in"
+              ],
+              "path": [
+                "api",
+                "users"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "2"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create A User",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 201\", function () {\r",
+                  "    pm.response.to.have.status(201);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"User details\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "     pm.expect (jsonData.name).to.contains(\"Bolaji\");\r",
+                  "     pm.expect (jsonData.job).to.eql(\"tester\");\r",
+                  "     pm.expect (jsonData.createdAt).to.contains(2022);\r",
+                  "   \r",
+                  "  \r",
+                  "\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "id": "5b88c32c-9320-4856-89eb-f4027d4ee6bd"
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "var firstName = \"Bolaji\" + pm.variables.replaceIn(\"{{$randomInt}}\");\r",
+                  "pm.environment.set(\"userName\",firstName);"
+                ],
+                "type": "text/javascript",
+                "id": "03a9ab28-a65f-47eb-b19f-2a3204cfcd93"
+              }
+            }
+          ],
+          "_postman_id": "9908fdc7-8b57-4469-b6ff-c06e5e961881",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"{{userName}}\",\r\n    \"job\": \"tester\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "https://reqres.in/api/users"
+          },
+          "response": []
+        },
+        {
+          "name": "Register successful",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Registration details\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "     pm.expect (jsonData.id).to.eql(4);\r",
+                  "     pm.expect (jsonData.token).to.eql(\"QpwL5tke4Pnpja7X4\");\r",
+                  "     \r",
+                  "\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "id": "5e64bdee-91f6-44b4-950c-ac90a9c6bd8b"
+              }
+            }
+          ],
+          "_postman_id": "00106884-c7dd-41ba-94ab-91b16774b15c",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"eve.holt@reqres.in\",\r\n    \"password\": \"pistol\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseURL}}api/register"
+          },
+          "response": []
+        },
+        {
+          "name": "Update user",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Update details\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "     pm.expect (jsonData.name).to.eql(\"Bolaji\");\r",
+                  "     pm.expect (jsonData.job).to.eql(\"barcelona resident\");\r",
+                  "     pm.expect (jsonData.updatedAt).to.contains(2022);\r",
+                  "   \r",
+                  "  \r",
+                  "\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "id": "0382b4cf-50a7-496b-8aab-976c7b93f185"
+              }
+            }
+          ],
+          "_postman_id": "416ca9e7-b4c0-45da-ab74-4b51a9e26adf",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"Bolaji\",\r\n    \"job\": \"barcelona resident\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseURL}}api/users/2"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete a user",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 204\", function () {\r",
+                  "    pm.response.to.have.status(204);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "id": "ab0889c8-56b8-4048-bb30-8cf1d7c3db84"
+              }
+            }
+          ],
+          "_postman_id": "ac14c1ce-9251-48e6-826e-7f1947c45b15",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"bolaji\",\r\n    \"job\": \"tester\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseURL}}api/users/2"
+          },
+          "response": []
+        }
+      ],
+      "_postman_id": "832288e8-e967-4f7e-a10a-d228e21597a5"
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          ""
+        ],
+        "id": "d44c8f9f-0c10-4ae7-9cff-797576bdc6d6"
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          ""
+        ],
+        "id": "6c4d5f50-99c8-4243-bba2-9613d8338ed3"
+      }
+    }
+  ],
+  "variable": [
+    {
+      "id": "90b2b707-96ba-4a24-b364-8ba881fa67c8",
+      "key": "baseURL",
+      "value": "https://reqres.in/",
+      "type": "string"
+    }
+  ]
+}
